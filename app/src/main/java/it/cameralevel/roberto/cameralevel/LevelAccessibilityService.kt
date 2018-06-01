@@ -10,8 +10,14 @@ import android.view.WindowManager
 import android.graphics.PixelFormat
 import android.view.View
 
-import android.view.WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
+import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+
+import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+import android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+
 import android.view.WindowManager.LayoutParams.WRAP_CONTENT
 
 
@@ -26,12 +32,13 @@ class LevelAccessibilityService : AccessibilityService() {
         mLayout = FrameLayout(this)
 
         val lp = WindowManager.LayoutParams()
-        lp.type = TYPE_ACCESSIBILITY_OVERLAY
+        lp.type = TYPE_APPLICATION_OVERLAY
         lp.format = PixelFormat.TRANSLUCENT
-        lp.flags = lp.flags or FLAG_NOT_FOCUSABLE
+        //lp.flags = lp.flags or FLAG_NOT_FOCUSABLE
+        lp.flags = FLAG_FULLSCREEN and FLAG_NOT_FOCUSABLE and FLAG_NOT_TOUCHABLE and FLAG_LAYOUT_INSET_DECOR and FLAG_LAYOUT_NO_LIMITS
         lp.width = WRAP_CONTENT
         lp.height = WRAP_CONTENT
-        lp.gravity = Gravity.BOTTOM
+        lp.gravity = Gravity.BOTTOM and Gravity.LEFT
 
         val inflater = LayoutInflater.from(this)
         inflater.inflate(R.layout.action_bar, mLayout)
